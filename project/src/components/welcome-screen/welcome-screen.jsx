@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function WelcomeScreen(props) {
   const {errorsCount} = props;
@@ -19,5 +20,9 @@ function WelcomeScreen(props) {
     </section>
   );
 }
+
+WelcomeScreen.propTypes = {
+  errorsCount: PropTypes.number.isRequired,
+};
 
 export default WelcomeScreen;
