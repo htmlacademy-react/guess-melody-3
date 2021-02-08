@@ -14,7 +14,7 @@ import genreQuestionProp from '../genre-question-screen/genre-question.prop';
 
 function App(props) {
   const {errorsCount, questions} = props;
-  const [firstQuestion] = questions;
+  const [firstQuestion, secondQuestion] = questions;
 
   return (
     <BrowserRouter>
@@ -25,7 +25,10 @@ function App(props) {
           />
         </Route>
         <Route exact path={AppRoute.DEV_ARTIST}>
-          <ArtistQuestionScreen />
+          <ArtistQuestionScreen
+            question={secondQuestion}
+            onAnswer={() => {}}
+          />
         </Route>
         <Route exact path={AppRoute.DEV_GENRE}>
           <GenreQuestionScreen
