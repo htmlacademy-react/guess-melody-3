@@ -12,4 +12,5 @@ export const AppRoute = {
   ROOT: '/',
   DEV_ARTIST: '/dev-artist',
   DEV_GENRE: '/dev-genre',
+  GAME: '/game',
 };
