@@ -9,9 +9,12 @@ import AuthScreen from '../auth-screen/auth-screen';
 import GameOverScreen from '../game-over-screen/game-over-screen';
 import WinScreen from '../win-screen/win-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import artistQuestionProp from '../artist-question-screen/artist-question.prop';
+import genreQuestionProp from '../genre-question-screen/genre-question.prop';
 
 function App(props) {
-  const {errorsCount} = props;
+  const {errorsCount, questions} = props;
+  const [firstQuestion] = questions;
 
   return (
     <BrowserRouter>
@@ -25,7 +28,9 @@ function App(props) {
           <ArtistQuestionScreen />
         </Route>
         <Route exact path={AppRoute.DEV_GENRE}>
-          <GenreQuestionScreen />
+          <GenreQuestionScreen
+            question={firstQuestion}
+          />
         </Route>
         <Route exact path={AppRoute.LOGIN}>
           <AuthScreen />
@@ -46,6 +51,9 @@ function App(props) {
 
 App.propTypes = {
   errorsCount: PropTypes.number.isRequired,
+  questions: PropTypes.arrayOf(
+    PropTypes.oneOfType([artistQuestionProp, genreQuestionProp]).isRequired,
+  ),
 };
 
 export default App;
