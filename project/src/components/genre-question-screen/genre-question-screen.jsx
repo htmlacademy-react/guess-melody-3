@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import Logo from '../logo/logo';
+import PropTypes from 'prop-types';
 import genreQuestionProp from './genre-question.prop';
 
 function GenreQuestionScreen(props) {
   const [userAnswers, setUserAnswers] = useState([false, false, false, false]);
-  const {question} = props;
+  const {onAnswer, question} = props;
   const {answers, genre} = question;
 
   return (
@@ -26,7 +27,13 @@ function GenreQuestionScreen(props) {
 
       <section className="game__screen">
         <h2 className="game__title">Выберите {genre} треки</h2>
-        <form className="game__tracks">
+        <form
+          className="game__tracks"
+          onSubmit={(evt) => {
+            evt.preventDefault();
+            onAnswer(question, userAnswers);
+          }}
+        >
           {answers.map((answer, id) => {
             const keyValue = `${id}-${answer.src}`;
             return (
@@ -59,6 +66,7 @@ function GenreQuestionScreen(props) {
 }
 
 GenreQuestionScreen.propTypes = {
+  onAnswer: PropTypes.func.isRequired,
   question: genreQuestionProp,
 };
 

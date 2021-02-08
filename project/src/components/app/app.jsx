@@ -30,6 +30,7 @@ function App(props) {
         <Route exact path={AppRoute.DEV_GENRE}>
           <GenreQuestionScreen
             question={firstQuestion}
+            onAnswer={() => {}}
           />
         </Route>
         <Route exact path={AppRoute.LOGIN}>
