@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Logo from '../logo/logo';
 import PropTypes from 'prop-types';
 import genreQuestionProp from './genre-question.prop';
+import AudioPlayer from '../audio-player/audio-player';
 
 function GenreQuestionScreen(props) {
   const [userAnswers, setUserAnswers] = useState([false, false, false, false]);
@@ -38,12 +39,10 @@ function GenreQuestionScreen(props) {
             const keyValue = `${id}-${answer.src}`;
             return (
               <div key={keyValue} className="track">
-                <button className="track__button track__button--play" type="button"/>
-                <div className="track__status">
-                  <audio
-                    src={answer.src}
-                  />
-                </div>
+                <AudioPlayer
+                  autoPlay={id === 0}
+                  src={answer.src}
+                />
                 <div className="game__answer">
                   <input className="game__input visually-hidden" type="checkbox" name="answer" value={`answer-${id}`}
                     id={`answer-${id}`}
