@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Logo from '../logo/logo';
 import PropTypes from 'prop-types';
 import artistQuestionProp from './artist-question.prop';
 import AudioPlayer from '../audio-player/audio-player';
 
 function ArtistQuestionScreen(props) {
+  const [isPlaying, setIsPlaying] = useState(true);
   const {onAnswer, question} = props;
   const {answers, song} = question;
 
@@ -30,8 +31,9 @@ function ArtistQuestionScreen(props) {
         <div className="game__track">
           <div className="track">
             <AudioPlayer
-              autoPlay
+              isPlaying={isPlaying}
               src={song.src}
+              onPlayButtonClick={() => setIsPlaying(!isPlaying)}
             />
           </div>
         </div>
