@@ -2,6 +2,7 @@ import React from 'react';
 import Logo from '../logo/logo';
 import PropTypes from 'prop-types';
 import artistQuestionProp from './artist-question.prop';
+import AudioPlayer from '../audio-player/audio-player';
 
 function ArtistQuestionScreen(props) {
   const {onAnswer, question} = props;
@@ -28,12 +29,10 @@ function ArtistQuestionScreen(props) {
         <h2 className="game__title">Кто исполняет эту песню?</h2>
         <div className="game__track">
           <div className="track">
-            <button className="track__button track__button--play" type="button" />
-            <div className="track__status">
-              <audio
-                src={song.src}
-              />
-            </div>
+            <AudioPlayer
+              autoPlay
+              src={song.src}
+            />
           </div>
         </div>
 
