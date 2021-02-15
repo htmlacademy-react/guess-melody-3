@@ -10,7 +10,5 @@ export const AppRoute = {
   LOSE: '/lose',
   RESULT: '/result',
   ROOT: '/',
-  DEV_ARTIST: '/dev-artist',
-  DEV_GENRE: '/dev-genre',
   GAME: '/game',
 };
