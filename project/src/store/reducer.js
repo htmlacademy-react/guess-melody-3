@@ -18,6 +18,10 @@ const reducer = (state = initialState, action) => {
         ...state,
         mistakes: state.mistakes + action.payload,
       };
+    case ActionType.RESET_GAME:
+      return {
+        ...initialState,
+      };
     default:
       return state;
   }
