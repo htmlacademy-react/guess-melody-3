@@ -1,11 +1,10 @@
 import {ActionType} from './action';
-import questions from '../mocks/questions';
 import {FIRST_GAME_STEP, AuthorizationStatus} from '../const';
 
 const initialState = {
   mistakes: 0,
   step: FIRST_GAME_STEP,
-  questions,
+  questions: [],
   authorizationStatus: AuthorizationStatus.UNKNOWN,
 };
 
