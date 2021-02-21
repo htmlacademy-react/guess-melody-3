@@ -1,11 +1,12 @@
 import {ActionType} from './action';
 import questions from '../mocks/questions';
-import {FIRST_GAME_STEP} from '../const';
+import {FIRST_GAME_STEP, AuthorizationStatus} from '../const';
 
 const initialState = {
   mistakes: 0,
   step: FIRST_GAME_STEP,
   questions,
+  authorizationStatus: AuthorizationStatus.UNKNOWN,
 };
 
 const reducer = (state = initialState, action) => {
@@ -31,6 +32,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         questions: action.payload,
+      };
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
+      };
+    case ActionType.LOGOUT:
+      return {
+        ...state,
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
       };
     default:
       return state;
