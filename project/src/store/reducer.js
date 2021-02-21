@@ -36,6 +36,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...initialState,
       };
+    case ActionType.LOAD_QUESTIONS:
+      return {
+        ...state,
+        questions: action.payload,
+      };
     default:
       return state;
   }
