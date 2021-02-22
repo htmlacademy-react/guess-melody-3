@@ -19,3 +19,9 @@ export const AuthorizationStatus = {
   NO_AUTH: 'NO_AUTH',
   UNKNOWN: 'UNKNOWN',
 };
+
+export const APIRoute = {
+  QUESTIONS: '/questions',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+};
