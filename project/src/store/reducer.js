@@ -6,6 +6,7 @@ const initialState = {
   step: FIRST_GAME_STEP,
   questions: [],
   authorizationStatus: AuthorizationStatus.UNKNOWN,
+  isDataLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -25,12 +26,15 @@ const reducer = (state = initialState, action) => {
       };
     case ActionType.RESET_GAME:
       return {
-        ...initialState,
+        ...state,
+        mistakes: 0,
+        step: FIRST_GAME_STEP,
       };
     case ActionType.LOAD_QUESTIONS:
       return {
         ...state,
         questions: action.payload,
+        isDataLoaded: true,
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
