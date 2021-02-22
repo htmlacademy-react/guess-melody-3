@@ -10,6 +10,7 @@ import WinScreen from '../win-screen/win-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import GameScreen from '../game-screen/game-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
+import PrivateRoute from '../private-route/private-route';
 import {isCheckedAuth} from '../../game';
 
 function App(props) {
@@ -32,9 +33,12 @@ function App(props) {
         <Route exact path={AppRoute.LOGIN}>
           <AuthScreen />
         </Route>
-        <Route exact path={AppRoute.RESULT}>
-          <WinScreen />
-        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoute.RESULT}
+          render={() => <WinScreen />}
+        >
+        </PrivateRoute>
         <Route exact path={AppRoute.LOSE}>
           <GameOverScreen />
         </Route>
