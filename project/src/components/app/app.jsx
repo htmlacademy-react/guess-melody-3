@@ -37,16 +37,23 @@ function App(props) {
         <PrivateRoute
           exact
           path={AppRoute.RESULT}
-          render={() => <WinScreen />}
-        >
-        </PrivateRoute>
-        <Route exact path={AppRoute.LOSE}>
-          <GameOverScreen />
-        </Route>
+          render={({history}) => (
+            <WinScreen
+              onReplayButtonClick={() => history.push(AppRoute.GAME)}
+            />
+          )}
+        />
+        <Route
+          exact
+          path={AppRoute.LOSE}
+          render={({history}) => (
+            <GameOverScreen
+              onReplayButtonClick={() => history.push(AppRoute.GAME)}
+            />
+          )}
+        />
         <Route exact path={AppRoute.GAME}>
-          <GameScreen
-            errorsCount={MAX_MISTAKE_COUNT}
-          />
+          <GameScreen />
         </Route>
         <Route>
           <NotFoundScreen />

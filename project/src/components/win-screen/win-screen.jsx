@@ -1,10 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {useHistory} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {ActionCreator} from '../../store/action';
 
-function WinScreen() {
-  const history = useHistory();
+function WinScreen(props) {
+  const {questionsCount, mistakesCount, onReplayButtonClick, resetGame} = props;
+  const correctlyQuestionsCount = questionsCount - mistakesCount;
 
   return (
     <section className="result">
@@ -15,9 +17,12 @@ function WinScreen() {
         <img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83" />
       </div>
       <h2 className="result__title">Вы настоящий меломан!</h2>
-      <p className="result__total">Вы ответили правильно на 6 вопросов и совершили 2 ошибки</p>
+      <p className="result__total">Вы ответили правильно на {correctlyQuestionsCount} вопросов и совершили {mistakesCount} ошибки</p>
       <button
-        onClick={() => history.push(AppRoute.GAME)}
+        onClick={() => {
+          resetGame();
+          onReplayButtonClick();
+        }}
         className="replay"
         type="button"
       >
@@ -27,4 +32,25 @@ function WinScreen() {
   );
 }
 
-export default WinScreen;
+WinScreen.propTypes = {
+  questionsCount: PropTypes.number.isRequired,
+  mistakesCount: PropTypes.number.isRequired,
+  onReplayButtonClick: PropTypes.func.isRequired,
+  resetGame: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = ({step, mistakes}) => ({
+  questionsCount: step,
+  mistakesCount: mistakes,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  resetGame() {
+    dispatch(ActionCreator.resetGame());
+  },
+});
+
+
+export {WinScreen};
+
+export default connect(mapStateToProps, mapDispatchToProps)(WinScreen);
