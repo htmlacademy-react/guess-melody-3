@@ -1,6 +1,25 @@
-import React from 'react';
+import React, {useRef} from 'react';
+import {useHistory} from 'react-router-dom';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {login} from '../../store/api-actions';
+import {AppRoute} from '../../const';
 
-function AuthScreen() {
+function AuthScreen({onSubmit}) {
+  const loginRef = useRef();
+  const passwordRef = useRef();
+
+  const history = useHistory();
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    onSubmit({
+      login: loginRef.current.value,
+      password: passwordRef.current.value,
+    });
+  };
+
   return (
     <section className="login">
       <div className="login__logo">
@@ -11,21 +30,52 @@ function AuthScreen() {
       <form
         className="login__form"
         action=""
+        onSubmit={handleSubmit}
       >
         <p className="login__field">
           <label className="login__label" htmlFor="name">Логин</label>
-          <input className="login__input" type="text" name="name" id="name" />
+          <input
+            ref={loginRef}
+            className="login__input"
+            type="text"
+            name="name"
+            id="name"
+          />
         </p>
         <p className="login__field">
           <label className="login__label" htmlFor="password">Пароль</label>
-          <input className="login__input" type="text" name="password" id="password" />
+          <input
+            ref={passwordRef}
+            className="login__input"
+            type="text"
+            name="password"
+            id="password"
+          />
           <span className="login__error">Неверный пароль</span>
         </p>
         <button className="login__button button" type="submit">Войти</button>
       </form>
-      <button className="replay" type="button">Сыграть ещё раз</button>
+      <button
+        onClick={() => history.push(AppRoute.GAME)}
+        className="replay"
+        type="button"
+      >
+        Сыграть ещё раз
+      </button>
     </section>
   );
 }
 
-export default AuthScreen;
+AuthScreen.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
+
+
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit(authData) {
+    dispatch(login(authData));
+  },
+});
+
+export {AuthScreen};
+export default connect(null, mapDispatchToProps)(AuthScreen);
