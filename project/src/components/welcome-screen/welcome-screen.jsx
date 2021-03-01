@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useHistory} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {resetGame} from '../../store/action';
 import {AppRoute} from '../../const';
 
 function WelcomeScreen(props) {
-  const {errorsCount, onResetGame} = props;
+  const {errorsCount} = props;
 
   const history = useHistory();
+  const dispatch = useDispatch();
 
   return (
     <section className="welcome">
@@ -18,7 +19,7 @@ function WelcomeScreen(props) {
       <button
         className="welcome__button"
         onClick={() => {
-          onResetGame();
+          dispatch(resetGame());
           history.push(AppRoute.GAME);
         }}
       >
@@ -39,14 +40,6 @@ function WelcomeScreen(props) {
 
 WelcomeScreen.propTypes = {
   errorsCount: PropTypes.number.isRequired,
-  onResetGame: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onResetGame() {
-    dispatch(resetGame());
-  },
-});
-
-export {WelcomeScreen};
-export default connect(null, mapDispatchToProps)(WelcomeScreen);
+export default WelcomeScreen;
