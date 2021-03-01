@@ -1,12 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Logo from '../logo/logo';
 import PropTypes from 'prop-types';
 import genreQuestionProp from './genre-question.prop';
+import {useUserAnswers} from '../../hooks/use-user-answers';
 
 function GenreQuestionScreen(props) {
-  const [userAnswers, setUserAnswers] = useState([false, false, false, false]);
   const {onAnswer, question, renderPlayer, children} = props;
   const {answers, genre} = question;
+  const [userAnswers, handleAnswer, handleAnswerChange] = useUserAnswers(question, onAnswer);
 
   return (
     <section className="game game--genre">
@@ -27,7 +28,7 @@ function GenreQuestionScreen(props) {
           className="game__tracks"
           onSubmit={(evt) => {
             evt.preventDefault();
-            onAnswer(question, userAnswers);
+            handleAnswer(question, userAnswers);
           }}
         >
           {answers.map((answer, id) => {
@@ -41,7 +42,7 @@ function GenreQuestionScreen(props) {
                     checked={userAnswers[id]}
                     onChange={({target}) => {
                       const value = target.checked;
-                      setUserAnswers([...userAnswers.slice(0, id), value, ...userAnswers.slice(id + 1)]);
+                      handleAnswerChange(id, value);
                     }}
                   />
                   <label className="game__check" htmlFor={`answer-${id}`}>Отметить</label>
