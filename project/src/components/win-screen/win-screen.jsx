@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {logout} from '../../store/api-actions';
 import {resetGame} from '../../store/action';
+import {getStep, getMistakeCount} from '../../store/game-process/selectors';
 
 function WinScreen(props) {
   const {questionsCount, mistakesCount, onReplayButtonClick, onResetGame, logoutGame} = props;
@@ -51,9 +52,9 @@ WinScreen.propTypes = {
   logoutGame: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({GAME}) => ({
-  questionsCount: GAME.step,
-  mistakesCount: GAME.mistakes,
+const mapStateToProps = (state) => ({
+  questionsCount: getStep(state),
+  mistakesCount: getMistakeCount(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
