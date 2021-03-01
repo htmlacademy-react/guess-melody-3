@@ -1,13 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {incrementStep, incrementMistake} from '../../store/action';
 import {AppRoute, GameType, MAX_MISTAKE_COUNT} from '../../const';
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen';
-import artistQuestionProp from '../artist-question-screen/artist-question.prop';
-import genreQuestionProp from '../genre-question-screen/genre-question.prop';
 import Mistakes from '../mistakes/mistakes';
 
 import withAudioPlayer from '../../hocs/with-audio-player/with-audio-player';
@@ -17,8 +14,18 @@ import {getStep, getMistakeCount} from '../../store/game-process/selectors';
 const GenreQuestionScreenWrapped = withAudioPlayer(GenreQuestionScreen);
 const ArtistQuestionScreenWrapped = withAudioPlayer(ArtistQuestionScreen);
 
-function GameScreen(props) {
-  const {questions, step, onUserAnswer, mistakes} = props;
+function GameScreen() {
+  const step = useSelector((state) => getStep(state));
+  const mistakes = useSelector((state) => getMistakeCount(state));
+  const questions = useSelector((state) => getQuestions(state));
+
+  const dispatch = useDispatch();
+
+  const onUserAnswer = (currentQuestion, answer) => {
+    dispatch(incrementStep());
+    dispatch(incrementMistake(currentQuestion, answer));
+  };
+
   const question = questions[step];
 
   if (mistakes >= MAX_MISTAKE_COUNT) {
@@ -59,27 +66,4 @@ function GameScreen(props) {
   }
 }
 
-GameScreen.propTypes = {
-  questions: PropTypes.arrayOf(
-    PropTypes.oneOfType([artistQuestionProp, genreQuestionProp]).isRequired,
-  ),
-  step: PropTypes.number.isRequired,
-  onUserAnswer: PropTypes.func.isRequired,
-  mistakes: PropTypes.number.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  step: getStep(state),
-  mistakes: getMistakeCount(state),
-  questions: getQuestions(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onUserAnswer(question, answer) {
-    dispatch(incrementStep());
-    dispatch(incrementMistake(question, answer));
-  },
-});
-
-export {GameScreen};
-export default connect(mapStateToProps, mapDispatchToProps)(GameScreen);
+export default GameScreen;
