@@ -51,9 +51,9 @@ WinScreen.propTypes = {
   logoutGame: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({step, mistakes}) => ({
-  questionsCount: step,
-  mistakesCount: mistakes,
+const mapStateToProps = ({GAME}) => ({
+  questionsCount: GAME.step,
+  mistakesCount: GAME.mistakes,
 });
 
 const mapDispatchToProps = (dispatch) => ({
