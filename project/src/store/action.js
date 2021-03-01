@@ -1,3 +1,4 @@
+import {createAction} from '@reduxjs/toolkit';
 import {isArtistAnswerCorrect, isGenreAnswerCorrect} from '../game';
 import {GameType} from '../const';
 
@@ -11,16 +12,13 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: 'game/redirectToRoute',
 };
 
-export const incrementStep = () => ({
-  type: ActionType.INCREMENT_STEP,
+export const incrementStep = createAction(ActionType.INCREMENT_STEP, () => ({
   payload: 1,
-});
+}));
 
-export const resetGame = () => ({
-  type: ActionType.RESET_GAME,
-});
+export const resetGame = createAction(ActionType.RESET_GAME);
 
-export const incrementMistake = (question, userAnswer) => {
+export const incrementMistake = createAction(ActionType.INCREMENT_MISTAKES, (question, userAnswer) => {
   let answerIsCorrect;
 
   switch (question.type) {
@@ -38,23 +36,18 @@ export const incrementMistake = (question, userAnswer) => {
     type: ActionType.INCREMENT_MISTAKES,
     payload: answerIsCorrect ? 0 : 1,
   };
-};
+});
 
-export const loadQuestions = (questions) => ({
-  type: ActionType.LOAD_QUESTIONS,
+export const loadQuestions = createAction(ActionType.LOAD_QUESTIONS, (questions) => ({
   payload: questions,
-});
+}));
 
-export const requireAuthorization = (status) => ({
-  type: ActionType.REQUIRED_AUTHORIZATION,
+export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
   payload: status,
-});
+}));
 
-export const logout = () => ({
-  type: ActionType.LOGOUT,
-});
+export const logout = createAction(ActionType.LOGOUT);
 
-export const redirectToRoute = (url) => ({
-  type: ActionType.REDIRECT_TO_ROUTE,
+export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
   payload: url,
-});
+}));
