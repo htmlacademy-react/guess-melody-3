@@ -40,6 +40,7 @@ function AuthScreen() {
             type="text"
             name="name"
             id="name"
+            data-testid="login"
           />
         </p>
         <p className="login__field">
@@ -50,6 +51,7 @@ function AuthScreen() {
             type="text"
             name="password"
             id="password"
+            data-testid="password"
           />
           <span className="login__error">Неверный пароль</span>
         </p>
