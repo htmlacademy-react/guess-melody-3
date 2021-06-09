@@ -3,15 +3,26 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
+import {logout} from '../../store/api-actions';
 
 function WinScreen(props) {
-  const {questionsCount, mistakesCount, onReplayButtonClick, resetGame} = props;
+  const {questionsCount, mistakesCount, onReplayButtonClick, resetGame, logoutGame} = props;
   const correctlyQuestionsCount = questionsCount - mistakesCount;
 
   return (
     <section className="result">
       <div className="result-logout__wrapper">
-        <Link className="result-logout__link" to="/">Выход</Link>
+        <Link
+          className="result-logout__link"
+          onClick={(evt) => {
+            evt.preventDefault();
+
+            logoutGame();
+          }}
+          to='/'
+        >
+          Выход
+        </Link>
       </div>
       <div className="result__logo">
         <img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83" />
@@ -37,6 +48,7 @@ WinScreen.propTypes = {
   mistakesCount: PropTypes.number.isRequired,
   onReplayButtonClick: PropTypes.func.isRequired,
   resetGame: PropTypes.func.isRequired,
+  logoutGame: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({step, mistakes}) => ({
@@ -47,6 +59,9 @@ const mapStateToProps = ({step, mistakes}) => ({
 const mapDispatchToProps = (dispatch) => ({
   resetGame() {
     dispatch(ActionCreator.resetGame());
+  },
+  logoutGame() {
+    dispatch(logout());
   },
 });
 
